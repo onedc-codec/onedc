@@ -1,0 +1,53 @@
+# model params
+model_id: runwayml/stable-diffusion-v1-5
+vae_model_id: madebyollin/taesd
+revision: ~
+sdxl: false
+num_denoising_step: 1
+num_train_timesteps: 1000
+denoising_timestep: 1000
+conditioning_timestep: 999
+tune_unet: false
+use_large_vae: true         # for fast init compression module, may use tiny, but performance will drop.
+vae_attn_patch: 16
+num_visuals: 2
+freeze_codec: true
+freeze_codec_encoder: true
+use_codeformer: false
+
+# lora params
+lora_config:
+  lora_rank: 64
+  lora_alpha: 8.0
+  lora_dropout: 0.0
+
+# codec params
+codec:
+  internal_ch: 512
+  bottleneck_ch: 128
+  unet_ch_config: [512, 768, 768]
+  z_fsq_levels: [4,4,4,4,4,4,4]   # FSQ, equal to 16384 codebook
+
+
+# training params
+local_rank: -1      # will be overwrited, ignore its value
+gradient_checkpointing: false
+use_fp16: true
+
+# path params
+max_checkpoint: 3
+no_save: false                      # only for debug, enable by args --no_save, not set in config file.
+checkpoint_path: ~
+unet_ckpt: ~                        # useless here
+codec_ckpt: ~                       # useless here
+unet_ckpt_lora: ~                   # useless here
+
+# for continue training, just ignore it.
+override_lr: ~
+override_step: ~
+
+# project name and save path
+name: ~
+output_path: /mnt/data/naifu/projects/dmd2-codec/logs/experiments     # replace with your path
+debug: false
+disable_tqdm: false

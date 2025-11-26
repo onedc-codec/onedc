@@ -1,0 +1,120 @@
+# model params
+model_id: runwayml/stable-diffusion-v1-5
+vae_model_id: madebyollin/taesd
+revision: ~
+sdxl: false
+num_denoising_step: 1
+num_train_timesteps: 1000
+denoising_timestep: 1000
+conditioning_timestep: 999
+tune_unet: false
+use_large_vae: true         # for fast init compression module, may use tiny, but performance will drop.
+vae_attn_patch: 16
+num_visuals: 2
+freeze_codec: true
+freeze_codec_encoder: true
+use_codeformer: false
+
+# lora params
+lora_config:
+  lora_rank: 64
+  lora_alpha: 8.0
+  lora_dropout: 0.0
+
+# codec params
+codec:
+  internal_ch: 512
+  bottleneck_ch: 128
+  unet_ch_config: [512, 768, 768]
+  z_fsq_levels: [4,4,4,4,4,4,4]   # FSQ, equal to 16384 codebook
+
+# dmd2 loss params
+gan_alone: false
+real_guidance_scale: 1.75
+fake_guidance_scale: 1.00
+dfake_gen_update_ratio: 10
+min_step_percent: 0.02
+max_step_percent: 0.64
+cls_on_clean_image: true
+diffusion_gan: true
+diffusion_gan_max_timestep: 1000
+
+# loss params
+dm_loss_weight: 1.0
+gen_cls_loss: true
+gen_cls_loss_weight: 1e-3
+guidance_cls_loss_weight: 1e-2
+pix_loss_weight: 0.625           
+pix_loss:
+  pix_weight: 1.0
+  lpips_weight: 1.0
+  pix_loss_type: l1
+  lmbda: 0.0              # No use of lmbda in dmd stage 2
+  lmbda_schedule: ~
+
+# training params
+local_rank: -1      # will be overwrited, ignore its value
+seed: 33550336
+train_iters: 1_000_100          # 1000k for lr=1e-6, then you may manually adjust lr and continue training
+gradient_checkpointing: false
+use_fp16: true
+warmup_step: 500
+max_grad_norm: 5.0
+gradient_accumulation_steps: 1
+generator_lr: 1e-6
+guidance_lr: 1e-6
+monitor_key_lower: total_loss
+
+# dataset params
+resolution: 512
+batch_size: 8
+num_workers: 8
+use_random_transform: true
+random_resize_list: [512]
+random_resize_prob: [0.2]
+random_resize_batch_reduction: [1.0]
+random_crop_list: [512, 1024]
+random_crop_prob: [0.5, 0.3]
+random_crop_batch_reduction: [1.0, 0.25]
+train_dataset:
+  dataset_1:
+    target: data.common_canvas_set.CommonCanvas_HF_crop
+    params:
+      data_dir: ../dataset         # To your cc dataset path, which contain .arrow and .json files.
+      crop_size: 1024
+      loading_length: 10000         # how many .arrow files to load
+eval_dataset: 
+  dataset_1:
+    target: data.trainset.COCO
+    params:
+      json_file: ~    # To your coco val json file path.
+      root_dir: ~     # To your coco val images path.   
+      crop_size: 512
+      random_crop: false
+
+# log related
+save_interval: 20_000
+log_interval: 200
+visual_interval: 5000
+use_wandb: false                   # set to true to enable wandb logging, if not, use tensorboard.
+wandb_entity: ~                    # replace with your wandb entity
+wandb_project: ~                   # replace with your wandb project
+
+# path params
+max_checkpoint: 3
+no_save: false                      # only for debug, enable by args --no_save, not set in config file.
+checkpoint_path: ~            # may not use?
+unet_ckpt: ~              # useless here.
+codec_ckpt: ~             # put the model_1.safetensors in stage 1 to here.
+unet_ckpt_lora: ~         # put the model.safetensors in stage 1 to here.
+guidance_ckpt: ~          # when continue training, put the model_2.safetensors to here
+
+# for continue training, just ignore it.
+override_lr: ~
+override_step: ~
+
+# project name and save path
+name: test_run                       # replace with your name
+output_path: ../logs/experiments     # replace with your path
+debug: false
+disable_tqdm: false
