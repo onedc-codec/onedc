@@ -9,6 +9,11 @@
 Naifu Xue, Zhaoyang Jia, Jiahao Li, Bin Li, Yuan Zhang, Yan Lu
 
 
+## 👍 More Works
+- [DLF: Extreme Image Compression with Dual-generative Latent Fusion (ICCV 2025 Highlight)](https://github.com/dlfcodec/Dual-generative-Latent-Fusion)
+
+
+
 ## 📝 Abstract
 While recent diffusion-based generative image codecs have shown impressive performance, their iterative sampling process introduces unpleasant latency. In this work, we revisit the design of a diffusion-based codec and argue that multi-step sampling is not necessary for generative compression. Based on this insight, we propose OneDC, a One-step Diffusion-based generative image Codec—that integrates a latent compression module with a one-step diffusion generator. Recognizing the critical role of semantic guidance in one-step diffusion, we propose using the hyperprior as a semantic signal, overcoming the limitations of text prompts in representing complex visual content. To further enhance the semantic capability of the hyperprior, we introduce a semantic distillation mechanism that transfers knowledge from a pretrained generative tokenizer to the hyperprior codec. Additionally, we adopt a hybrid pixel- and latent-domain optimization to jointly enhance both reconstruction fidelity and perceptual realism. Extensive experiments demonstrate that OneDC achieves SOTA perceptual quality even with one-step generation, offering over 39% bitrate reduction and 20×faster decoding compared to prior multi-step diffusion-based codecs. Project: https://onedc-codec.github.io/
 
