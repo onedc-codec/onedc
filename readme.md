@@ -11,7 +11,7 @@ Naifu Xue, Zhaoyang Jia, Jiahao Li, Bin Li, Yuan Zhang, Yan Lu
 
 ## 👍 More Works
 - [DLF: Extreme Image Compression with Dual-generative Latent Fusion (ICCV 2025 Highlight)](https://github.com/dlfcodec/Dual-generative-Latent-Fusion)
-
+- [Generative Latent Coding for Ultra-Low Bitrate Image Compression (CVPR 2024)](https://github.com/jzyustc/GLC)
 
 
 ## 📝 Abstract
